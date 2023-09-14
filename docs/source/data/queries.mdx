@@ -416,6 +416,8 @@ Apollo Client first executes the query against the cache. If _all_ requested dat
 
 Prioritizes minimizing the number of network requests sent by your application.
 
+Will automatically refetch data when underlying field values change. If the query is defined in a mutation's `refetchQueries`, it will be ignored (no matter of the `fetchPolicy`) and a race condition against the mutation will occur.
+
 This is the default fetch policy.
 
 </td>
@@ -448,6 +450,8 @@ Apollo Client executes the full query against both the cache _and_ your GraphQL 
 
 Provides a fast response while also helping to keep cached data consistent with server data.
 
+Will automatically refetch data when underlying field values change. If the query is defined in a mutation's `refetchQueries`, it will be ignored (no matter of the `fetchPolicy`) and a race condition against the mutation will occur.
+
 </td>
 </tr>
 
@@ -462,6 +466,8 @@ Provides a fast response while also helping to keep cached data consistent with 
 Apollo Client executes the full query against your GraphQL server, _without_ first checking the cache. The query's result _is_ stored in the cache.
 
 Prioritizes consistency with server data, but can't provide a near-instantaneous response when cached data is available.
+
+Will automatically refetch data when underlying field values change. If the query is defined in a mutation's `refetchQueries`, it will be ignored (no matter of the `fetchPolicy`) and a race condition against the mutation will occur.
 
 </td>
 </tr>
@@ -487,7 +493,11 @@ Similar to `network-only`, except the query's result _is not_ stored in the cach
 </td>
 <td>
 
-Uses the same logic as `cache-first`, except this query does _not_ automatically update when underlying field values change. You can still _manually_ update this query with `refetch` and `updateQueries`.
+Will not update on cache changes.
+
+Will not execute without calling `refetch` or `updateQueries`.
+
+Will _not_ automatically refetch data when underlying field values change.
 
 </td>
 </tr>
